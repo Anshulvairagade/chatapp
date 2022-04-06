@@ -7,6 +7,7 @@ const chatRoutes = require('./../backend/Routes/chatRoutes');
 const messageRoutes = require('./../backend/Routes/messageRoutes');
 var bodyParser = require('body-parser');
 const { notFound ,errorHandler} = require("./Midlleware/errorMidlleware");
+const path = require('path')
 
 dotenv.config();
 
@@ -26,6 +27,28 @@ app.use('/api/message',messageRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
+
+
+// ----------------------------Deployment-------------------------
+
+const __dirname3 = path.resolve();
+if(process.env.NODE_ENV === "production"){
+      app.use(express.static(path.join(__dirname3,'/Major-project/build')));
+
+      app.get("*",(req,res) => {
+        res.sendFile(path.resolve(__dirname3, "Major-project" , "build" , "index.html"));
+        console.log("Hello");
+      })
+} else{
+  app.get('/node',(req,res)=>{
+    res.send("Production is not working")
+}); 
+}
+
+
+
+
+// ----------------------------Deployment-------------------------
 
 
 const Port = process.env.PORT || 9000;
