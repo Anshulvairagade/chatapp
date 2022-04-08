@@ -1,12 +1,13 @@
 const asyncHandler = require('express-async-handler');
 const { generateToken } = require('../Config/generateToken');
+const { count } = require('./../Modal/userModel');
 const User = require('./../Modal/userModel');
 
 
 const registerUser = asyncHandler(async (req,res) =>{
-    const {name , email, password, pic} = req.body;
+    const {name , email, password, pic, country, language} = req.body;
     
-    if(!name || !email || !password){
+    if(!name || !email || !password || !country || !language){
         res.status(400);
         throw new Error("Please Enter all the Fields");
     }
@@ -23,6 +24,8 @@ const registerUser = asyncHandler(async (req,res) =>{
         email,
         password,
         pic,
+        country,
+        language
     });
 
     if(user){
@@ -31,6 +34,8 @@ const registerUser = asyncHandler(async (req,res) =>{
             name:user.name,
             email:user.email,
             pic:user.pic,
+            country:user.country,
+            language:user.language,
             token: generateToken(user._id)
         })
     }else{
@@ -50,6 +55,8 @@ const authUser = asyncHandler(async(req,res)=>{
                     name:user.name,
                     email:user.email,
                     pic:user.pic,
+                    country:user.country,
+                    language:user.language,
                     token: generateToken(user._id)
                 })
             }else{
