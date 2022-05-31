@@ -17,9 +17,33 @@ const app = express();
 app.use(express.json());
 app.use(bodyParser.json());
 
-app.get('/',(req,res)=>{
-    res.send("API is working")
-});
+// app.get('*',(req,res)=>{
+//     res.send("API is working")
+// });
+
+
+
+// ----------------------------Deployment-------------------------
+
+const __dirname3 = path.resolve();
+if(process.env.NODE_ENV === "production"){
+      app.use(express.static(path.join(__dirname3,'/Major-project/build')));
+
+      app.get("*",(req,res) => {
+        res.sendFile(path.resolve(__dirname3, "Major-project/build/index.html"));
+      })
+} else{
+  app.get('*',(req,res)=>{
+    res.send("Production is not working")
+}); 
+}
+
+
+
+
+// ----------------------------Deployment-------------------------
+
+
 
 app.use('/api/user',userRoutes);
 app.use('/api/chat',chatRoutes);
@@ -27,28 +51,6 @@ app.use('/api/message',messageRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
-
-
-// ----------------------------Deployment-------------------------
-
-// const __dirname3 = path.resolve();
-// if(process.env.NODE_ENV === "production"){
-//       app.use(express.static(path.join(__dirname3,'/Major-project/build')));
-
-//       app.get("*",(req,res) => {
-//         res.sendFile(path.resolve(__dirname3, "Major-project" , "build" , "index.html"));
-//         console.log("Hello");
-//       })
-// } else{
-//   app.get('/node',(req,res)=>{
-//     res.send("Production is not working")
-// }); 
-// }
-
-
-
-
-// ----------------------------Deployment-------------------------
 
 
 const Port = process.env.PORT || 9000;
