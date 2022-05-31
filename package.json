@@ -7,16 +7,8 @@
     "start": "nodemon backend/server.js",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix Major-project && npm run build --prefix Major-project"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Anshulvairagade/chatapp.git"
-  },
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Anshulvairagade/chatapp/issues"
-  },
-  "homepage": "https://github.com/Anshulvairagade/chatapp#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.2",
